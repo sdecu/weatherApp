@@ -1,0 +1,36 @@
+header  {
+display: flex;
+justify-content: center;
+}
+
+nav {
+display: flex;
+justify-content: space-between;
+width: 50%;
+}
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #111827; ;
+    color: rgb(132, 0, 255);
+  }
+  h1, h2 {
+    margin-bottom: 10px;
+  }
+  .menu-section {
+    margin-bottom: 20px;
+  }
+  .menu-item {
+    margin-bottom: 5px;
+  }
+  .menu-item-description {
+    font-style: italic;
+  }
+  .price {
+    font-weight: bold;
+}
