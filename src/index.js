@@ -58,50 +58,12 @@ const docEl = (function() {
   }
 })();
 
-async function logWeather(location) {
-  let query = location;
-  const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=7696cbc4355444c4bc1221226240606&q=${query}`, {mode: 'cors'});
-  let data = await response.json();
-  let loc = data.location;
-  let cur = data.current;
-
-  let country = loc.country;
-  let city = loc.name;
-  let region = loc.region;
-  let condition = cur.condition.text;
-  let tempF = cur.temp_f;
-  let tempC = cur.temp_c;
-  let feelF = cur.feelslike_f;
-  let feelC = cur.feelslike_c;
-  let humidity = cur.humidity;
-  let windMPH = cur.wind_mph;
-  let windKPH = cur.wind_kph;
-  let gustMPH = cur.gust_mph;
-
-
-
-
-    return {
-    country,
-    city,
-    region,
-    condition,
-    tempC,
-    tempF,
-    feelC,
-    feelF,
-    humidity,
-    windKPH,
-    windMPH,
-    gustMPH
-
-  }
-}
-
 async function logForecast(location) {
   let query = location;
   const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=7696cbc4355444c4bc1221226240606&q=${query}&days=3`, {mode: 'cors'});
   let data = await response.json();
+  let loc = data.location;
+  let cur = data.current;
   let today = data.forecast.forecastday[0].day;
   let tomorrow = data.forecast.forecastday[1].day;
   let overmorrow = data.forecast.forecastday[2].day;
@@ -119,6 +81,19 @@ async function logForecast(location) {
   const tomLow = today.mintemp_F;
   const overLow = overmorrow.mintemp_F;
 
+  let country = loc.country;
+  let city = loc.name;
+  let region = loc.region;
+  let condition = cur.condition.text;
+  let tempF = cur.temp_f;
+  let tempC = cur.temp_c;
+  let feelF = cur.feelslike_f;
+  let feelC = cur.feelslike_c;
+  let humidity = cur.humidity;
+  let windMPH = cur.wind_mph;
+  let windKPH = cur.wind_kph;
+  let gustMPH = cur.gust_mph;
+
 
 console.log(data)
 
@@ -135,31 +110,25 @@ console.log(data)
       overHIgh,
       todayLow,
       tomLow,
-      overLow
+      overLow,
+      country,
+      city,
+      region,
+      condition,
+      tempC,
+      tempF,
+      feelC,
+      feelF,
+      humidity,
+      windKPH,
+      windMPH,
+      gustMPH
 }
 }
 
 
 
 
-let foo1 = logForecast('paris').then(resolve =>  {console.log(resolve.data.forecast.forecastday[0].day)});
-
-
-docEl.input.addEventListener('keypress', function (e) {
-  if (e.key === 'Enter') {
-    logWeather(docEl.input.value).then(resolve =>  {
-      console.log(docEl.feelsLike);
-      PrintPage(resolve)
-      docEl.input.value = '';
-    })
-  }
-});
-
-
-function PrintPage (input) {
-  console.log(input.country)
-  docEl.feelsLike.textContent = `${input.country}`;
-}
 
 (function ()  {
 const foo = document.querySelector('header')
