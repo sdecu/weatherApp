@@ -1,8 +1,10 @@
 body   {
-    background-color: #002f64;
+    background-color: #50d8d7;
+    background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     margin: 0;
     padding: 0;
     overflow:hidden;
+    height: 100vh;
 }
 
 header  {
@@ -20,6 +22,10 @@ input {
   height: fit-content;
   font-size: large;
   align-self: center;
+  align-self: center;
+  border-radius: 20px;
+  border: 1px solid #50d8d7;
+  padding: 1ch;
 }
 
 #middle {
@@ -33,7 +39,8 @@ input {
   font-size: 5ch;
   margin-top: 10%;
   border-radius: 20px;
-  border: 1px solid #2d9fd9;
+  border: 1px solid #50d8d7;
+  padding-left: 2ch;
 }
 
 .weekly {
