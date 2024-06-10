@@ -2,23 +2,24 @@ import './style.css';
 
 const docEl = (function() {
   let input = document.querySelector('input');
-  const todayDate = document.getElementById('today\'s date');
-  const todayTemp = document.getElementById('Temp');
-  const todayRain = document.getElementById('Rain');
-  const todayLow = document.getElementById('Daily Low');
-  const todayHigh = document.getElementById('Daily High');
-  
-  const tomorrowDate = document.getElementById('today\'s date');
-  const tomorrowTemp = document.getElementById('Temp');
-  const tomorrowRain = document.getElementById('Rain');
-  const tomorrowLow = document.getElementById('Daily Low');
-  const tomorrowHigh = document.getElementById('Daily High');
-  
-  const dayAfterDate = document.getElementById('today\'s date');
-  const dayAfterTemp = document.getElementById('Temp');
-  const dayAfterRain = document.getElementById('Rain');
-  const dayAfterLow = document.getElementById('Daily Low');
-  const dayAfterHigh = document.getElementById('Daily High');
+  const todaysDate = document.querySelector('#todaysDate');
+  const temp = document.querySelector('#temp');
+  const rain = document.querySelector('#rain');
+  const dailyLow = document.querySelector('#dailyLow');
+  const dailyHigh = document.querySelector('#dailyHigh');
+
+  const tomDate = document.querySelector('#tomDate');
+  const tomTemp = document.querySelector('#tomTemp');
+  const tomRain = document.querySelector('#tomRain');
+  const tomDailyLow = document.querySelector('#tomDailyLow');
+  const tomDailyHigh = document.querySelector('#tomDailyHigh');
+
+  const overDate = document.querySelector('#overDate');
+  const overTemp = document.querySelector('#overTemp');
+  const overRain = document.querySelector('#overRain');
+  const overDailyLow = document.querySelector('#overDailyLow');
+  const overDailyHigh = document.querySelector('#overDailyHigh');
+
   const feelsLike = document.querySelector('#feelsLike');
   const windSpeed = document.querySelector('#windSpeed');
   const gust = document.querySelector('#gust');
@@ -31,21 +32,21 @@ const docEl = (function() {
 
   return{
     input,    
-    todayDate,
-    todayTemp,
-    todayRain,
-    todayLow,
-    todayHigh,
-    tomorrowDate,
-    tomorrowTemp,
-    tomorrowRain,
-    tomorrowLow,
-    tomorrowHigh,
-    dayAfterDate,
-    dayAfterTemp,
-    dayAfterRain,
-    dayAfterLow,
-    dayAfterHigh,
+    todaysDate,
+    temp,
+    rain,
+    dailyLow,
+    dailyHigh,
+    tomDate,
+    tomTemp,
+    tomRain,
+    tomDailyLow,
+    tomDailyHigh,
+    overDate,
+    overTemp,
+    overRain,
+    overDailyLow,
+    overDailyHigh,
     feelsLike,
     windSpeed,
     gust,
@@ -74,12 +75,12 @@ async function logForecast(location) {
   const todayDate = data.forecast.forecastday[0].date;
   const tomDate = data.forecast.forecastday[1].date;
   const overDate = data.forecast.forecastday[2].date;
-  const todayHigh = today.maxtemp_F;
-  const tomHigh = tomorrow.maxtemp_F;
-  const overHIgh = overmorrow.maxtemp_F;
-  const todayLow = today.mintemp_F;
-  const tomLow = today.mintemp_F;
-  const overLow = overmorrow.mintemp_F;
+  const todayHigh = today.maxtemp_f;
+  const tomHigh = tomorrow.maxtemp_f;
+  const overHIgh = overmorrow.maxtemp_f;
+  const todayLow = today.mintemp_f;
+  const tomLow = today.mintemp_f;
+  const overLow = overmorrow.mintemp_f;
 
   let country = loc.country;
   let city = loc.name;
@@ -95,7 +96,7 @@ async function logForecast(location) {
   let gustMPH = cur.gust_mph;
 
 
-console.log(data)
+console.log(overmorrow)
 
     return {
       data,
@@ -127,7 +128,47 @@ console.log(data)
 }
 
 
+docEl.input.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    logForecast(docEl.input.value).then(resolve =>  {
+      console.log(docEl.feelsLike);
+      PrintPage(resolve)
+      docEl.input.value = '';
+    })
+  }
+});
 
+
+function PrintPage (input) {
+  console.log(input.country)
+  docEl.feelsLike.textContent = 'Feels like: ' + input.feelF + '°F';
+  docEl.windSpeed.textContent = 'Wind Speed: ' + input.windMPH + ' mph';
+  docEl.gust.textContent = 'Gust: ' + input.gustMPH + ' mph';
+  docEl.windChill.textContent = 'Wind Chill: ' + input.feelF + '°F';
+  docEl.precipitation.textContent = 'Precipitation: ' + input.todayPrecip + '%';
+  docEl.country.textContent = 'Country: ' + input.country;
+  docEl.city.textContent = 'City: ' + input.city;
+  docEl.region.textContent = 'Region: ' + input.region;
+  docEl.humidity.textContent = 'Humidity: ' + input.humidity + '%';
+
+  docEl.todaysDate.textContent = 'Date: ' + input.todayDate;
+  docEl.temp.textContent = 'Temperature: ' + input.tempF + '°F';
+  docEl.rain.textContent = 'Chance of Rain: ' + input.todayPrecip + '%';
+  docEl.dailyLow.textContent = 'Low: ' + input.todayLow + '°F';
+  docEl.dailyHigh.textContent = 'High: ' + input.todayHigh + '°F';
+
+  docEl.tomDate.textContent = 'Date: ' + input.tomDate;
+  docEl.tomTemp.textContent = 'Temperature: ' + input.tomHigh + '°F';
+  docEl.tomRain.textContent = 'Chance of Rain: ' + input.tomPrecip + '%';
+  docEl.tomDailyLow.textContent = 'Low: ' + input.tomLow + '°F';
+  docEl.tomDailyHigh.textContent = 'High: ' + input.tomHigh + '°F';
+
+  docEl.overDate.textContent = 'Date: ' + input.overDate;
+  docEl.overTemp.textContent = 'Temperature: ' + input.overHIgh + '°F';
+  docEl.overRain.textContent = 'Chance of Rain: ' + input.overPrecip + '%';
+  docEl.overDailyLow.textContent = 'Low: ' + input.overLow + '°F';
+  docEl.overDailyHigh.textContent = 'High: ' + input.overHIgh + '°F';
+}
 
 
 (function ()  {
