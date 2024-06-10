@@ -95,9 +95,6 @@ async function logForecast(location) {
   let windKPH = cur.wind_kph;
   let gustMPH = cur.gust_mph;
 
-
-console.log(overmorrow)
-
     return {
       data,
       todayPrecip,
@@ -127,11 +124,11 @@ console.log(overmorrow)
 }
 }
 
+logForecast('paris').then(resolve =>  {PrintPage(resolve)})
 
 docEl.input.addEventListener('keypress', function (e) {
   if (e.key === 'Enter') {
     logForecast(docEl.input.value).then(resolve =>  {
-      console.log(docEl.feelsLike);
       PrintPage(resolve)
       docEl.input.value = '';
     })
@@ -140,7 +137,6 @@ docEl.input.addEventListener('keypress', function (e) {
 
 
 function PrintPage (input) {
-  console.log(input.country)
   docEl.feelsLike.textContent = 'Feels like: ' + input.feelF + '°F';
   docEl.windSpeed.textContent = 'Wind Speed: ' + input.windMPH + ' mph';
   docEl.gust.textContent = 'Gust: ' + input.gustMPH + ' mph';
